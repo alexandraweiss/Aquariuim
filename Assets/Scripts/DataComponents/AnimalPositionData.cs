@@ -5,9 +5,7 @@ using Unity.Entities;
 using Unity.Mathematics;
 
 [GenerateAuthoringComponent]
-public struct AnimalMovementData : IComponentData
+public struct AnimalPositionData : IComponentData
 {
-    public float3 direction;
-    public float movementSpeed;
-    public float amplitude;
+    public float3 position;
 }
