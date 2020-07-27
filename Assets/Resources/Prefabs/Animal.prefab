@@ -16,7 +16,6 @@ GameObject:
   - component: {fileID: 2472305027217059989}
   - component: {fileID: -2909368483970128484}
   - component: {fileID: 8566824874679875446}
-  - component: {fileID: 3964265580820638829}
   m_Layer: 0
   m_Name: Animal
   m_TagString: Untagged
@@ -236,8 +235,13 @@ MonoBehaviour:
     x: 0
     y: 0
     z: 0
-  xSpeed: 0
-  zSpeed: 0
+  directionOffset:
+    x: 0
+    y: 0
+    z: 0
+  movementSpeed: 0
+  amplitude: 0
+  updateInterval: 0
 --- !u!114 &8566824874679875446
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -251,19 +255,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   behaviour: 0
---- !u!114 &3964265580820638829
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2472305027217059988}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 739a2b2e2c91e1f4fbf970b3e1227820, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  position:
-    x: 0
-    y: 0
-    z: 0

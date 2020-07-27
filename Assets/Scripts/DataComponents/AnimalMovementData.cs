@@ -8,6 +8,10 @@ using Unity.Mathematics;
 public struct AnimalMovementData : IComponentData
 {
     public float3 direction;
+    public float3 directionOffset;
+
     public float movementSpeed;
     public float amplitude;
+
+    public int updateInterval;
 }
