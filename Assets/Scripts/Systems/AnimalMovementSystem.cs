@@ -12,16 +12,16 @@ using Unity.Collections;
 /// The movement consists of a direction, a speed, and an undulating movement in the z-axis. 
 /// </summary>
 [AlwaysSynchronizeSystem]
-public class AnimalMovementSystem : JobComponentSystem
+public class AnimalMovementSystem : SystemBase
 {
 
     [BurstCompile]
-    struct AnimalMovementSystemJob : IJobForEach<Translation, AnimalMovementData>
+    protected override void OnUpdate()
     {
-        public float et;
-        public float dt; 
+        float et = Convert.ToSingle(Time.ElapsedTime);
+        float dt = Convert.ToSingle(Time.DeltaTime);
 
-        public void Execute(ref Translation translation, [ReadOnly] ref AnimalMovementData movementData)
+        Entities.ForEach((ref Translation translation, in AnimalMovementData movementData) => 
         {
             // Apply offset on the z-axis to a copy of the direction.
             float3 t_dir = movementData.direction;
@@ -31,18 +31,7 @@ public class AnimalMovementSystem : JobComponentSystem
             float3 forward = t_dir * movementData.movementSpeed * dt;
 
             translation.Value += forward;
-        }
-    }
-
-
-    protected override JobHandle OnUpdate(JobHandle inputDeps)
-    {
-        var job = new AnimalMovementSystemJob();
-
-        job.et = Convert.ToSingle(Time.ElapsedTime);
-        job.dt = Convert.ToSingle(Time.DeltaTime);
-
-        return job.Schedule(this, inputDeps);
+        }).ScheduleParallel();
     }
 }
 
