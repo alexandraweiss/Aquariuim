@@ -29,9 +29,11 @@ public class CollisionAvoidanceSystem : SystemBase
                 AnimalMovementData mvmtDataA = mvmtData[triggerEvent.Entities.EntityA];
                 AnimalMovementData mvmtDataB = mvmtData[triggerEvent.Entities.EntityB];
 
-                quaternion deltar = quaternion.RotateY(0.175f);
-                float3 d = math.rotate(deltar, mvmtDataB.direction);
-                mvmtDataA.targetDirection = d;
+                quaternion newRotation = quaternion.RotateY(0.262f);
+                float3 newDirection = math.rotate(newRotation, mvmtDataB.direction);
+                newDirection = math.normalizesafe(newDirection);
+                // Set EntityA's target direction
+                mvmtDataA.targetDirection = newDirection;
                 mvmtData[triggerEvent.Entities.EntityA] = mvmtDataA;
             }
         }
@@ -52,9 +54,7 @@ public class CollisionAvoidanceSystem : SystemBase
             mvmtData = GetComponentDataFromEntity<AnimalMovementData>(),
         };
 
-        Dependency = JobHandle.CombineDependencies(Dependency, World.GetExistingSystem<EndFramePhysicsSystem>().FinalJobHandle);
-        Dependency = notificationJob.Schedule(stepPhysicsWorld.Simulation, ref buildPhysicsWorld.PhysicsWorld, 
-            JobHandle.CombineDependencies(Dependency, buildPhysicsWorld.FinalJobHandle));
+        Dependency = notificationJob.Schedule(stepPhysicsWorld.Simulation, ref buildPhysicsWorld.PhysicsWorld, Dependency);
         Dependency.Complete();
     }
 }
