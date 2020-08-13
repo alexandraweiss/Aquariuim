@@ -9,6 +9,7 @@ using Unity.Collections;
 /// </summary>
 public class AnimalManager : MonoBehaviour
 {
+    [Range(1, 10000)]
     public uint amount = 1;
 
     protected EntityManager entityManager;
@@ -51,34 +52,36 @@ public class AnimalManager : MonoBehaviour
     {
         if (animalPrefab != null)
         {
-            float scale = amount / 100f;
+            float scale = amount * 0.005f;
             scale = math.clamp(scale, 10f, 10000f);
             UnityEngine.Random.InitState(System.Convert.ToInt32(Time.deltaTime * 10000f));
             
             for (int i = 0; i < amount; i++)
             {
                 Entity animal = entityManager.Instantiate(animalPrefab);
-                
-                float3 dir = new float3(UnityEngine.Random.Range(-3f, 3f), UnityEngine.Random.Range(-0.3f, 0.3f), UnityEngine.Random.Range(-3f, 3f));
+
+                float3 dir = new float3(UnityEngine.Random.Range(-0.25f, 0.25f),
+                                        UnityEngine.Random.Range(-0.15f, 0.15f),
+                                        UnityEngine.Random.Range(-0.25f, 0.25f));
                 dir = math.normalize(dir);
 
                 float3 pos = new float3(UnityEngine.Random.Range(-3f * scale, 3f * scale),
                                         UnityEngine.Random.Range(0.2f * scale, 5.8f * scale),
                                         UnityEngine.Random.Range(-3f * scale, 3f * scale));
 
-                Translation t = new Translation();
-                t.Value = pos;
+                Translation t = new Translation { Value = pos };
                 entityManager.AddComponentData(animal, t);
 
-                Rotation r = new Rotation();
-                r.Value = quaternion.LookRotationSafe(dir, up);
+                Rotation r = new Rotation { Value = quaternion.LookRotationSafe(dir, up) };
                 entityManager.AddComponentData(animal, r);
 
-                AnimalMovementData mvmtData = new AnimalMovementData();
-                mvmtData.direction = dir; 
-                mvmtData.movementSpeed = 1f;
-                mvmtData.amplitude = 0.25f;
-                mvmtData.updateInterval = UnityEngine.Random.Range(2, 10);
+                AnimalMovementData mvmtData = new AnimalMovementData
+                {
+                    direction = dir,
+                    movementSpeed = 1f,
+                    amplitude = 0.25f,
+                    updateInterval = UnityEngine.Random.Range(2, 10),
+                };
                 entityManager.AddComponentData(animal, mvmtData);
             }
 

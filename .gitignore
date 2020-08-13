@@ -73,3 +73,6 @@ crashlytics-build.properties
 # Blender temp files
 *.blend1
 *.blend1.meta
+
+# 3rd-party packages
+/Packages/
