@@ -36,7 +36,16 @@ public class AnimalMovementSystem : SystemBase
 
             float3 forward = t_dir * movementData.movementSpeed * dt;
 
-            translation.Value += forward;
+            // Clamp the value for translation in a min/max range
+            float x = translation.Value.x + forward.x;
+            float y = translation.Value.y + forward.y;
+            float z = translation.Value.z + forward.z;
+            x = math.clamp(x, StaticValues.MIN_X, StaticValues.MAX_X);
+            y = math.clamp(y, StaticValues.MIN_Y, StaticValues.MAX_Y);
+            z = math.clamp(z, StaticValues.MIN_Z, StaticValues.MAX_Z);
+
+            translation.Value = new float3(x, y, z);
+            
         }).Schedule(Dependency);
 
         Dependency.Complete();

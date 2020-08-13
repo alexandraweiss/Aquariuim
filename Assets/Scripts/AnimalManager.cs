@@ -52,8 +52,8 @@ public class AnimalManager : MonoBehaviour
     {
         if (animalPrefab != null)
         {
-            float scale = amount * 0.005f;
-            scale = math.clamp(scale, 10f, 10000f);
+            float scale = amount * 0.0000001f;
+            scale = math.clamp(scale, 5f, 1000f);
             UnityEngine.Random.InitState(System.Convert.ToInt32(Time.deltaTime * 10000f));
             
             for (int i = 0; i < amount; i++)
@@ -61,7 +61,7 @@ public class AnimalManager : MonoBehaviour
                 Entity animal = entityManager.Instantiate(animalPrefab);
 
                 float3 dir = new float3(UnityEngine.Random.Range(-0.25f, 0.25f),
-                                        UnityEngine.Random.Range(-0.15f, 0.15f),
+                                        UnityEngine.Random.Range(-0.04f, 0.04f),
                                         UnityEngine.Random.Range(-0.25f, 0.25f));
                 dir = math.normalize(dir);
 
@@ -78,8 +78,8 @@ public class AnimalManager : MonoBehaviour
                 AnimalMovementData mvmtData = new AnimalMovementData
                 {
                     direction = dir,
-                    movementSpeed = 1f,
-                    amplitude = 0.25f,
+                    movementSpeed = 0.15f,
+                    amplitude = 0.1f,
                     updateInterval = UnityEngine.Random.Range(2, 10),
                 };
                 entityManager.AddComponentData(animal, mvmtData);

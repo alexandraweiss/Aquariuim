@@ -63,9 +63,9 @@ MonoBehaviour:
     y: 0
     z: 0
   m_PrimitiveSize:
-    x: 2
-    y: 5
-    z: 10
+    x: 0.3
+    y: 0.5
+    z: 1
   m_PrimitiveOrientation:
     Value:
       x: 0
@@ -73,15 +73,15 @@ MonoBehaviour:
       z: 0
     RotationOrder: 4
   m_Capsule:
-    Height: 10
-    Radius: 2.5
+    Height: 1
+    Radius: 0.25
     Axis: 2
   m_Cylinder:
-    Height: 10
-    Radius: 2.5
+    Height: 1
+    Radius: 0.25
     Axis: 2
   m_CylinderSideCount: 20
-  m_SphereRadius: 5
+  m_SphereRadius: 0.5
   m_MinimumSkinnedVertexWeight: 0.1
   m_ConvexHullGenerationParameters:
     m_SimplificationTolerance: 0.015
@@ -284,9 +284,9 @@ MonoBehaviour:
     y: 0
     z: 0
   m_PrimitiveSize:
-    x: 0.85
-    y: 1.69
-    z: 4.54
+    x: 0.08
+    y: 0.15
+    z: 0.35
   m_PrimitiveOrientation:
     Value:
       x: 0
@@ -294,15 +294,15 @@ MonoBehaviour:
       z: 0
     RotationOrder: 4
   m_Capsule:
-    Height: 4.54
-    Radius: 0.845
+    Height: 0.35
+    Radius: 0.075
     Axis: 2
   m_Cylinder:
-    Height: 4.54
-    Radius: 0.845
+    Height: 0.35
+    Radius: 0.075
     Axis: 2
   m_CylinderSideCount: 20
-  m_SphereRadius: 2.27
+  m_SphereRadius: 0.175
   m_MinimumSkinnedVertexWeight: 0.1
   m_ConvexHullGenerationParameters:
     m_SimplificationTolerance: 0.015
@@ -325,13 +325,13 @@ MonoBehaviour:
       m_Override: 0
       m_Value:
         Value: 0
-        CombineMode: 2
+        CombineMode: 1
     m_BelongsTo:
       m_Override: 0
-      m_Value: 0101010101010101010101010101010101010101010101010101010101010101
+      m_Value: 0100000000000000000000000000000000000000000000000000000000000000
     m_CollidesWith:
       m_Override: 0
-      m_Value: 0101010101010101010101010101010101010101010101010101010101010101
+      m_Value: 0001010101010101010101010101010101010101010101010101010101010101
     m_RaisesCollisionEvents:
       m_Override: 0
       m_Value: 0
