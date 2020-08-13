@@ -37,11 +37,10 @@ public class AnimalRandomDirectionSystem : SystemBase
                 Unity.Mathematics.Random randomInstance = randArray[nativeThreadIndex];
 
                 float x = randomInstance.NextFloat(movementData.direction.x - 0.2f, movementData.direction.x + 0.2f);
-                float y = randomInstance.NextFloat(movementData.direction.x - 0.1f, movementData.direction.x + 0.1f);
-                float z = randomInstance.NextFloat(movementData.direction.x - 0.2f, movementData.direction.x + 0.2f);
-                movementData.targetDirection = new float3(x, y, z);
-
-                float length = math.length(movementData.direction - movementData.targetDirection);
+                float y = randomInstance.NextFloat(movementData.direction.y - 0.1f, movementData.direction.y + 0.1f);
+                float z = randomInstance.NextFloat(movementData.direction.z - 0.2f, movementData.direction.z + 0.2f);
+                y = math.clamp(y, -0.4f, 0.4f);
+                movementData.targetDirection = math.normalize(new float3(x, y, z));
 
                 movementData.updateInterval = randomInstance.NextInt(3, 10);
 
@@ -52,7 +51,6 @@ public class AnimalRandomDirectionSystem : SystemBase
             // Apply the delta movement during the update
             movementData.direction += (movementData.targetDirection * dt);
             movementData.direction = math.normalize(movementData.direction);
-            movementData.direction.y = math.clamp(movementData.direction.y, 0f, 1000f);
 
             rotation.Value = quaternion.LookRotationSafe(movementData.direction, new float3(0f, 1f, 0f));
 
