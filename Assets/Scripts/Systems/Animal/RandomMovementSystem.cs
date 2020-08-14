@@ -23,17 +23,14 @@ public class AnimalRandomDirectionSystem : SystemBase
     protected override void OnUpdate() 
     {
         float et = Convert.ToSingle(Time.ElapsedTime);
-        float dt = Convert.ToSingle(Time.DeltaTime);
-
-        NativeArray<Unity.Mathematics.Random> randArray = World.GetExistingSystem<RandomSystem>().Randoms;
         Dependency = JobHandle.CombineDependencies(Dependency, World.GetExistingSystem<EndFramePhysicsSystem>().FinalJobHandle);
 
         Dependency = Entities.WithAll<AnimalTag>().ForEach((int nativeThreadIndex, ref Rotation rotation, ref AnimalMovementData movementData) =>
         {
-            
             // If the interval is ending, set a new random direction and random update interval.
             if (et % movementData.updateInterval <= 0.009f)
             {
+                NativeArray<Unity.Mathematics.Random> randArray = World.GetExistingSystem<RandomSystem>().Randoms;
                 Unity.Mathematics.Random randomInstance = randArray[nativeThreadIndex];
 
                 float x = randomInstance.NextFloat(movementData.direction.x - 0.2f, movementData.direction.x + 0.2f);
@@ -46,13 +43,6 @@ public class AnimalRandomDirectionSystem : SystemBase
 
                 randArray[nativeThreadIndex] = randomInstance;
             }
-            
-            
-            // Apply the delta movement during the update
-            movementData.direction += (movementData.targetDirection * dt);
-            movementData.direction = math.normalize(movementData.direction);
-
-            rotation.Value = quaternion.LookRotationSafe(movementData.direction, new float3(0f, 1f, 0f));
 
         }).Schedule(Dependency);
 

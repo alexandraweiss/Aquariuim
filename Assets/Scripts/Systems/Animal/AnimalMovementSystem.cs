@@ -1,15 +1,15 @@
-﻿using Unity.Jobs;
+﻿using System;
+using Unity.Jobs;
 using Unity.Entities;
-using Unity.Mathematics;
 using Unity.Transforms;
-using System;
+using Unity.Mathematics;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Physics.Systems;
 using UnityEngine;
 
 /// <summary>
-/// System which controls the animals movement. 
+/// System which controls the animal's movement. 
 /// The movement consists of a direction, a speed, and an undulating movement in the z-axis. 
 /// </summary>
 public class AnimalMovementSystem : SystemBase
@@ -27,7 +27,8 @@ public class AnimalMovementSystem : SystemBase
         float dt = Convert.ToSingle(Time.DeltaTime);
         Dependency = JobHandle.CombineDependencies(Dependency, World.GetExistingSystem<EndFramePhysicsSystem>().FinalJobHandle);
 
-        Dependency = Entities.WithAll<AnimalTag>().ForEach((ref Translation translation, in AnimalMovementData movementData) => 
+        Dependency = Entities.WithAll<AnimalTag>().ForEach((ref Translation translation, 
+            ref Rotation rotation, ref AnimalMovementData movementData) =>
         {
             // Apply offset on the z-axis to a copy of the direction.
             float3 t_dir = movementData.direction;
@@ -45,7 +46,12 @@ public class AnimalMovementSystem : SystemBase
             z = math.clamp(z, StaticValues.MIN_Z, StaticValues.MAX_Z);
 
             translation.Value = new float3(x, y, z);
-            
+
+            // Apply the stored rotation of the animals movement to the rotation component
+            movementData.direction += (movementData.targetDirection * dt);
+            movementData.direction = math.normalize(movementData.direction);
+            rotation.Value = quaternion.LookRotationSafe(movementData.direction, new float3(0f, 1f, 0f));
+
         }).Schedule(Dependency);
 
         Dependency.Complete();
