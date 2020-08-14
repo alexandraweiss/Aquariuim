@@ -1,15 +1,14 @@
-﻿using Unity.Jobs;
+﻿using System;
+using Unity.Jobs;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
-using System;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Physics.Systems;
-using UnityEngine;
 
 /// <summary>
-/// System which controls the animals movement. 
+/// System which controls the animals forward movement. 
 /// The movement consists of a direction, a speed, and an undulating movement in the z-axis. 
 /// </summary>
 public class AnimalMovementSystem : SystemBase
@@ -45,7 +44,7 @@ public class AnimalMovementSystem : SystemBase
             z = math.clamp(z, StaticValues.MIN_Z, StaticValues.MAX_Z);
 
             translation.Value = new float3(x, y, z);
-            
+
         }).Schedule(Dependency);
 
         Dependency.Complete();
