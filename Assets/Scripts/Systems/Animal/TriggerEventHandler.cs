@@ -11,7 +11,7 @@ using Unity.Transforms;
 /// <summary>
 /// System handling collision avoidance. 
 /// </summary>
-public class CollisionAvoidanceSystem : SystemBase
+public class TriggerEventHandler : SystemBase
 {
     private BuildPhysicsWorld buildPhysicsWorld;
     private StepPhysicsWorld stepPhysicsWorld;
@@ -55,7 +55,7 @@ public class CollisionAvoidanceSystem : SystemBase
     {
         buildPhysicsWorld = World.GetOrCreateSystem<BuildPhysicsWorld>();
         stepPhysicsWorld = World.GetOrCreateSystem<StepPhysicsWorld>();
-        Enabled = true;
+        Enabled = false;
     }
 
     [BurstCompile]
