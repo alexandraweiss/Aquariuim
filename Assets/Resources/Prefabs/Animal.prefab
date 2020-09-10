@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1566386047529766250}
   - component: {fileID: 8261321293320689774}
-  - component: {fileID: 8869627217068756687}
+  - component: {fileID: 2244487113090016328}
   m_Layer: 0
   m_Name: Collision
   m_TagString: Untagged
@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ConversionMode: 0
---- !u!114 &8869627217068756687
+--- !u!114 &2244487113090016328
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -61,11 +61,11 @@ MonoBehaviour:
   m_PrimitiveCenter:
     x: 0
     y: 0
-    z: 0
+    z: 0.45
   m_PrimitiveSize:
-    x: 0.3
-    y: 0.5
-    z: 1
+    x: 0.1
+    y: 0.2
+    z: 1.35
   m_PrimitiveOrientation:
     Value:
       x: 0
@@ -73,15 +73,15 @@ MonoBehaviour:
       z: 0
     RotationOrder: 4
   m_Capsule:
-    Height: 1
-    Radius: 0.25
+    Height: 1.35
+    Radius: 0.1
     Axis: 2
   m_Cylinder:
-    Height: 1
-    Radius: 0.25
+    Height: 1.35
+    Radius: 0.1
     Axis: 2
   m_CylinderSideCount: 20
-  m_SphereRadius: 0.5
+  m_SphereRadius: 0.675
   m_MinimumSkinnedVertexWeight: 0.1
   m_ConvexHullGenerationParameters:
     m_SimplificationTolerance: 0.015
@@ -98,7 +98,7 @@ MonoBehaviour:
     m_Friction:
       m_Override: 0
       m_Value:
-        Value: 0.5
+        Value: 0
         CombineMode: 0
     m_Restitution:
       m_Override: 0
@@ -113,7 +113,7 @@ MonoBehaviour:
       m_Value: 0101010101010101010101010101010101010101010101010101010101010101
     m_RaisesCollisionEvents:
       m_Override: 0
-      m_Value: 0
+      m_Value: 1
     m_CustomTags:
       m_Override: 0
       m_Value: 0000000000000000
@@ -331,7 +331,7 @@ MonoBehaviour:
       m_Value: 0100000000000000000000000000000000000000000000000000000000000000
     m_CollidesWith:
       m_Override: 0
-      m_Value: 0001010101010101010101010101010101010101010101010101010101010101
+      m_Value: 0101010000000000000000000000000000000000000000000000000000000000
     m_RaisesCollisionEvents:
       m_Override: 0
       m_Value: 0

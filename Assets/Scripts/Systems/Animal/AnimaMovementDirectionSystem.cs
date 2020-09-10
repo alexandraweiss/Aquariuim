@@ -14,12 +14,6 @@ using Unity.Physics.Systems;
 /// </summary>
 public class AnimaMovementDirectionSystem : SystemBase
 {
-    protected override void OnCreate()
-    {
-        base.OnCreate();
-        Enabled = true;
-    }
-
     [BurstCompile]
     protected override void OnUpdate()
     {
@@ -30,8 +24,9 @@ public class AnimaMovementDirectionSystem : SystemBase
         {
             // Apply and store the new direction based on the animal's target direction.
             movementData.direction += (movementData.targetDirection * dt);
+            movementData.direction.y = math.clamp(movementData.direction.y, -0.4f, 0.4f);
             movementData.direction = math.normalize(movementData.direction);
-            rotation.Value = quaternion.LookRotationSafe(movementData.direction, new float3(0f, 1f, 0f));
+            rotation.Value = quaternion.LookRotationSafe(movementData.direction, math.up());
 
         }).Schedule(Dependency);
 

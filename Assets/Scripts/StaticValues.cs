@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using Unity.Mathematics;
 
 public class StaticValues 
 {
@@ -12,4 +10,6 @@ public class StaticValues
 
     public static readonly float MAX_Z = 1000f;
     public static readonly float MIN_Z = - 1000f;
+
+    public static readonly float AVOIDANCE_MIN_ANGLE = 5.24f; // 300 deg
 }

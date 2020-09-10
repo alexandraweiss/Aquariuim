@@ -27,7 +27,7 @@ public class AnimalRandomDirectionSystem : SystemBase
         NativeArray<Unity.Mathematics.Random> randArray = World.GetExistingSystem<RandomSystem>().Randoms;
         Dependency = JobHandle.CombineDependencies(Dependency, World.GetExistingSystem<EndFramePhysicsSystem>().FinalJobHandle);
 
-        Dependency = Entities.WithAll<AnimalTag>().ForEach((int nativeThreadIndex, ref Rotation rotation, ref AnimalMovementData movementData) =>
+        Dependency = Entities.WithAll<AnimalTag>().ForEach((int nativeThreadIndex, ref AnimalMovementData movementData) =>
         {
             
             // If the interval is ending, set a new random direction and random update interval.
@@ -38,7 +38,7 @@ public class AnimalRandomDirectionSystem : SystemBase
                 float x = randomInstance.NextFloat(movementData.direction.x - 0.2f, movementData.direction.x + 0.2f);
                 float y = randomInstance.NextFloat(movementData.direction.y - 0.1f, movementData.direction.y + 0.1f);
                 float z = randomInstance.NextFloat(movementData.direction.z - 0.2f, movementData.direction.z + 0.2f);
-                y = math.clamp(y, -0.4f, 0.4f);
+                y = math.clamp(y, -0.3f, 0.3f);
                 movementData.targetDirection = math.normalize(new float3(x, y, z));
 
                 movementData.updateInterval = randomInstance.NextInt(3, 10);

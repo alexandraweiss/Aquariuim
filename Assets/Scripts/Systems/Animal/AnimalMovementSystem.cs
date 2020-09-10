@@ -13,12 +13,6 @@ using Unity.Physics.Systems;
 /// </summary>
 public class AnimalMovementSystem : SystemBase
 {
-    protected override void OnCreate()
-    {
-        base.OnCreate();
-        Enabled = true;
-    }
-
     [BurstCompile]
     protected override void OnUpdate()
     {
