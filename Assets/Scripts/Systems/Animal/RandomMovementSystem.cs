@@ -16,7 +16,7 @@ public class AnimalRandomDirectionSystem : SystemBase
     protected override void OnCreate()
     {
         base.OnCreate();
-        Enabled = true;
+        Enabled = false;
     }
 
     [BurstCompile]

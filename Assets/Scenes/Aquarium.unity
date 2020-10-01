@@ -260,6 +260,8 @@ MonoBehaviour:
   spawnCircular: 0
   specificAngle: 0
   spawnAngle: 50
+  rawPrefab: {fileID: 2472305027217059988, guid: 6acfb94ee5d4e1b4995be022d62c650e,
+    type: 3}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0

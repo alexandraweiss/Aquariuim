@@ -2,6 +2,8 @@
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 /// <summary>
 /// Class that  spawns animals and manages their behaviour. 
@@ -15,6 +17,8 @@ public class AnimalManager : MonoBehaviour
     [Range(0, 90)]
     public float spawnAngle;
 
+    public GameObject rawPrefab;
+
     protected EntityManager entityManager;
     protected Entity animalPrefab;
     protected BlobAssetStore blobAsset;
@@ -23,21 +27,34 @@ public class AnimalManager : MonoBehaviour
     private void Awake()
     {
         entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
-        GameObject animalPrefabObject = Resources.Load<GameObject>("Prefabs/Animal");
+        //Addressables.InstantiateAsync("Assets/Prefabs/Animal.prefab").Completed += OnAnimalPrefabLoaded; 
+
         GameObjectConversionSettings settings;
         blobAsset = new BlobAssetStore();
         settings = GameObjectConversionSettings.FromWorld(World.DefaultGameObjectInjectionWorld, blobAsset);
 
-        if (settings != null && animalPrefabObject != null)
+        if (settings != null /*&& animalPrefabObject != null*/)
         {
-              animalPrefab = GameObjectConversionUtility.ConvertGameObjectHierarchy(animalPrefabObject, settings);
+            //animalPrefab = GameObjectConversionUtility.ConvertGameObjectHierarchy(animalPrefabObject, settings);
+            animalPrefab = GameObjectConversionUtility.ConvertGameObjectHierarchy(rawPrefab, settings);
+            SpawnRandomAnimals(amount);
         }
     }
 
-
-    private void Start()
+    private void OnAnimalPrefabLoaded (AsyncOperationHandle<GameObject> operationHandle)
     {
-        SpawnRandomAnimals(amount);
+        //GameObject animalPrefabObject = operationHandle.Result;
+
+        GameObjectConversionSettings settings;
+        blobAsset = new BlobAssetStore();
+        settings = GameObjectConversionSettings.FromWorld(World.DefaultGameObjectInjectionWorld, blobAsset);
+
+        if (settings != null /*&& animalPrefabObject != null*/)
+        {
+            //animalPrefab = GameObjectConversionUtility.ConvertGameObjectHierarchy(animalPrefabObject, settings);
+
+            SpawnRandomAnimals(amount);
+        }
     }
 
 
@@ -57,7 +74,7 @@ public class AnimalManager : MonoBehaviour
             float scale = amount * 0.000001f;
             scale = math.clamp(scale, 5f, 1000f);
             UnityEngine.Random.InitState(System.Convert.ToInt32(Time.deltaTime * 10000f));
-            
+
             float circularAngle = 0f;
             for (int i = 0; i < amount; i++)
             {

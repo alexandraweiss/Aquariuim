@@ -14,6 +14,12 @@ using Unity.Physics.Systems;
 /// </summary>
 public class AnimaMovementDirectionSystem : SystemBase
 {
+    protected override void OnCreate()
+    {
+        base.OnCreate();
+        Enabled = false;
+    }
+
     [BurstCompile]
     protected override void OnUpdate()
     {
