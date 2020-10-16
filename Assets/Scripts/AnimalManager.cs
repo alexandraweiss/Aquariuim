@@ -4,14 +4,18 @@ using Unity.Mathematics;
 using Unity.Transforms;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.Profiling;
 
 /// <summary>
 /// Class that  spawns animals and manages their behaviour. 
 /// </summary>
 public class AnimalManager : MonoBehaviour
 {
-    [Range(1, 10000)]
+    [Range(1, 100000)]
     public uint amount = 1;
+    [Range(5, 100)]
+    public float spread_scale = 5;
+
     public bool spawnCircular;
     public bool specificAngle;
     [Range(0, 90)]
@@ -27,15 +31,13 @@ public class AnimalManager : MonoBehaviour
     private void Awake()
     {
         entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
-        //Addressables.InstantiateAsync("Assets/Prefabs/Animal.prefab").Completed += OnAnimalPrefabLoaded; 
 
         GameObjectConversionSettings settings;
         blobAsset = new BlobAssetStore();
         settings = GameObjectConversionSettings.FromWorld(World.DefaultGameObjectInjectionWorld, blobAsset);
 
-        if (settings != null /*&& animalPrefabObject != null*/)
+        if (settings != null)
         {
-            //animalPrefab = GameObjectConversionUtility.ConvertGameObjectHierarchy(animalPrefabObject, settings);
             animalPrefab = GameObjectConversionUtility.ConvertGameObjectHierarchy(rawPrefab, settings);
             SpawnRandomAnimals(amount);
         }
@@ -43,16 +45,13 @@ public class AnimalManager : MonoBehaviour
 
     private void OnAnimalPrefabLoaded (AsyncOperationHandle<GameObject> operationHandle)
     {
-        //GameObject animalPrefabObject = operationHandle.Result;
 
         GameObjectConversionSettings settings;
         blobAsset = new BlobAssetStore();
         settings = GameObjectConversionSettings.FromWorld(World.DefaultGameObjectInjectionWorld, blobAsset);
 
-        if (settings != null /*&& animalPrefabObject != null*/)
+        if (settings != null)
         {
-            //animalPrefab = GameObjectConversionUtility.ConvertGameObjectHierarchy(animalPrefabObject, settings);
-
             SpawnRandomAnimals(amount);
         }
     }
@@ -71,10 +70,8 @@ public class AnimalManager : MonoBehaviour
     {
         if (animalPrefab != null)
         {
-            float scale = amount * 0.000001f;
-            scale = math.clamp(scale, 5f, 1000f);
             UnityEngine.Random.InitState(System.Convert.ToInt32(Time.deltaTime * 10000f));
-
+            
             float circularAngle = 0f;
             for (int i = 0; i < amount; i++)
             {
@@ -85,7 +82,7 @@ public class AnimalManager : MonoBehaviour
 
                 if(spawnCircular)
                 {
-                    pos = getCircularSpawnPosition(circularAngle, scale);
+                    pos = getCircularSpawnPosition(circularAngle, spread_scale);
                     circularAngle += (2 * math.PI) / amount;
                     dir = float3.zero - pos;
                 }
@@ -100,9 +97,9 @@ public class AnimalManager : MonoBehaviour
                                             UnityEngine.Random.Range(-0.05f, 0.05f),
                                             UnityEngine.Random.Range(-0.25f, 0.25f));
 
-                    pos = new float3(UnityEngine.Random.Range(-3f * scale, 3f * scale),
-                                            UnityEngine.Random.Range(0.2f * scale, 5.8f * scale),
-                                            UnityEngine.Random.Range(-3f * scale, 3f * scale));
+                    pos = new float3(UnityEngine.Random.Range(-3f * spread_scale, 3f * spread_scale),
+                                            UnityEngine.Random.Range(0.2f * spread_scale, 5.8f * spread_scale),
+                                            UnityEngine.Random.Range(-3f * spread_scale, 3f * spread_scale));
                 }
                
                 dir = math.normalize(dir);
@@ -114,7 +111,7 @@ public class AnimalManager : MonoBehaviour
                 Rotation r = new Rotation { Value = quaternion.LookRotationSafe(dir, math.up()) };
                 entityManager.AddComponentData(animal, r);
 
-                float animalSpeed = 0.15f;
+                float animalSpeed = 0.5f; // 0.15f;
 
                 AnimalMovementData mvmtData = new AnimalMovementData
                 {
@@ -127,6 +124,7 @@ public class AnimalManager : MonoBehaviour
             }
 
             entityManager.DestroyEntity(animalPrefab);
+
         }
     }
 

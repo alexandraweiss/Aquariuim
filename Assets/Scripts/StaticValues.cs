@@ -14,4 +14,6 @@ public class StaticValues
     public static readonly float MIN_Z = -SIZE;
 
     public static readonly float AVOIDANCE_MIN_ANGLE = 5.24f; // 300 deg
+
+    public static readonly float BUCKET_SIZE = 50f;
 }
