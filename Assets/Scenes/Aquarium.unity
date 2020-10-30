@@ -301,8 +301,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d50958c986e3a34cb183ceee090de9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  amount: 10000
-  spread_scale: 30
+  amount: 10
+  spread_scale: 15
   spawnCircular: 0
   specificAngle: 0
   spawnAngle: 50
